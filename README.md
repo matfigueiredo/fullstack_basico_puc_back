@@ -21,7 +21,6 @@ Esta API permite realizar operações de CRUD (Criar, Ler, Atualizar e Deletar) 
 
 - **Flask**: Framework web leve e flexível
 - **SQLAlchemy**: ORM para manipulação do banco de dados
-- **Marshmallow**: Serialização e validação de dados
 - **Flask-Swagger**: Documentação interativa da API
 - **SQLite**: Banco de dados (configurável para outros SGBDs)
 
