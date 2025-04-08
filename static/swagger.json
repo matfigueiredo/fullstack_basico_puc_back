@@ -1,208 +1,297 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "API de Gerenciamento de Clientes",
-        "description": "API para opera\u00e7\u00f5es CRUD de clientes",
-        "version": "1.0.0"
+  "swagger": "2.0",
+  "info": {
+    "title": "API de Gerenciamento de Clientes",
+    "description": "API para operações CRUD de clientes e seus atributos customizáveis",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "tags": [
+    {
+      "name": "Clientes",
+      "description": "Operações relacionadas a clientes"
     },
-    "host": "localhost:5000",
-    "basePath": "/api",
-    "schemes": [
-        "http"
-    ],
-    "paths": {
-        "/clients": {
-            "get": {
-                "summary": "Listar todos os clientes",
-                "responses": {
-                    "200": {
-                        "description": "Lista de clientes"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Criar um novo cliente",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "name": {
-                                    "type": "string"
-                                },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "phone": {
-                                    "type": "string"
-                                },
-                                "attributes": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "key": {
-                                                "type": "string"
-                                            },
-                                            "value": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "required": [
-                                "name",
-                                "email"
-                            ]
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Cliente criado com sucesso"
-                    },
-                    "400": {
-                        "description": "Dados inv\u00e1lidos"
-                    }
-                }
-            }
-        },
-        "/clients/{id}": {
-            "get": {
-                "summary": "Buscar um cliente espec\u00edfico",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Cliente encontrado"
-                    },
-                    "404": {
-                        "description": "Cliente n\u00e3o encontrado"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Atualizar dados de um cliente",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "name": {
-                                    "type": "string"
-                                },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "phone": {
-                                    "type": "string"
-                                },
-                                "attributes": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "key": {
-                                                "type": "string"
-                                            },
-                                            "value": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Cliente atualizado com sucesso"
-                    },
-                    "404": {
-                        "description": "Cliente n\u00e3o encontrado"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Remover um cliente",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Cliente removido com sucesso"
-                    },
-                    "404": {
-                        "description": "Cliente n\u00e3o encontrado"
-                    }
-                }
-            }
-        },
-        "/clients/{id}/attributes": {
-            "post": {
-                "summary": "Adicionar atributo ao cliente",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "key": {
-                                    "type": "string"
-                                },
-                                "value": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "key",
-                                "value"
-                            ]
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Atributo adicionado com sucesso"
-                    },
-                    "404": {
-                        "description": "Cliente n\u00e3o encontrado"
-                    }
-                }
-            }
-        }
+    {
+      "name": "Atributos",
+      "description": "Operações relacionadas a atributos customizáveis de clientes"
     }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": ["Clientes"],
+        "summary": "Listar todos os clientes",
+        "responses": {
+          "200": {
+            "description": "Lista de clientes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Clientes"],
+        "summary": "Criar um novo cliente",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClientInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cliente criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
+          }
+        }
+      }
+    },
+    "/clients/{id}": {
+      "get": {
+        "tags": ["Clientes"],
+        "summary": "Buscar um cliente específico",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do cliente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "404": {
+            "description": "Cliente não encontrado"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Clientes"],
+        "summary": "Atualizar dados de um cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do cliente"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClientInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "404": {
+            "description": "Cliente não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Clientes"],
+        "summary": "Remover um cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do cliente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente removido com sucesso"
+          },
+          "404": {
+            "description": "Cliente não encontrado"
+          }
+        }
+      }
+    },
+    "/clients/{id}/attributes": {
+      "post": {
+        "tags": ["Atributos"],
+        "summary": "Adicionar atributo ao cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do cliente"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AttributeInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Atributo adicionado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Attribute"
+            }
+          },
+          "404": {
+            "description": "Cliente não encontrado"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Client": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "ID único do cliente"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nome do cliente"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email do cliente"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Telefone do cliente"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "description": "Data de criação do registro"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "description": "Data da última atualização"
+        },
+        "attributes": {
+          "type": "array",
+          "readOnly": true,
+          "items": {
+            "$ref": "#/definitions/Attribute"
+          },
+          "description": "Lista de atributos customizados do cliente"
+        }
+      },
+      "required": ["id", "name", "email"]
+    },
+    "ClientInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nome do cliente"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email do cliente"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Telefone do cliente"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributeInput"
+          },
+          "description": "Lista de atributos customizados do cliente"
+        }
+      },
+      "required": ["name", "email"]
+    },
+    "Attribute": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "ID único do atributo"
+        },
+        "key": {
+          "type": "string",
+          "description": "Chave do atributo"
+        },
+        "value": {
+          "type": "string",
+          "description": "Valor do atributo"
+        },
+        "client_id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true,
+          "description": "ID do cliente ao qual o atributo pertence"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "description": "Data de criação do registro"
+        }
+      },
+      "required": ["id", "key", "value", "client_id"]
+    },
+    "AttributeInput": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Chave do atributo"
+        },
+        "value": {
+          "type": "string",
+          "description": "Valor do atributo"
+        }
+      },
+      "required": ["key", "value"]
+    }
+  }
 }
