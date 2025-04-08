@@ -102,15 +102,6 @@ def delete_client(id):
         db.session.rollback()
         return jsonify({"message": f"Erro ao remover cliente: {str(e)}"}), 400
 
-@clients_bp.route('/<int:id>/attributes', methods=['GET'])
-def get_client_attributes(id):
-    """Retorna atributos de um cliente."""
-    client = Client.query.get(id)
-    if not client:
-        return jsonify({"message": "Cliente não encontrado"}), 404
-    
-    return jsonify(attributes_schema.dump(client.attributes)), 200
-
 @clients_bp.route('/<int:id>/attributes', methods=['POST'])
 def add_client_attribute(id):
     """Adiciona um novo atributo a um cliente."""
