@@ -17,6 +17,9 @@ def create_app(config_name='default'):
     
     db.init_app(app)
     
+    with app.app_context():
+        db.create_all()
+    
     configure_swagger(app)
     
     app.register_blueprint(clients_bp)
@@ -26,8 +29,5 @@ def create_app(config_name='default'):
 if __name__ == '__main__':
     env = os.environ.get('FLASK_ENV', 'development')
     app = create_app(env)
-    
-    with app.app_context():
-        db.create_all()
     
     app.run(host='0.0.0.0', port=5000)

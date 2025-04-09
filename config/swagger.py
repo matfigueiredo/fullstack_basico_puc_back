@@ -32,9 +32,20 @@ def configure_swagger(app):
         "host": "localhost:5000",
         "basePath": "/api",
         "schemes": ["http"],
+        "tags": [
+            {
+                "name": "clients",
+                "description": "Operações relacionadas a clientes"
+            },
+            {
+                "name": "attributes",
+                "description": "Operações relacionadas a atributos de clientes"
+            }
+        ],
         "paths": {
             "/clients": {
                 "get": {
+                    "tags": ["clients"],
                     "summary": "Listar todos os clientes",
                     "responses": {
                         "200": {
@@ -43,6 +54,7 @@ def configure_swagger(app):
                     }
                 },
                 "post": {
+                    "tags": ["clients"],
                     "summary": "Criar um novo cliente",
                     "parameters": [
                         {
@@ -82,6 +94,7 @@ def configure_swagger(app):
             },
             "/clients/{id}": {
                 "get": {
+                    "tags": ["clients"],
                     "summary": "Buscar um cliente específico",
                     "parameters": [
                         {
@@ -101,6 +114,7 @@ def configure_swagger(app):
                     }
                 },
                 "put": {
+                    "tags": ["clients"],
                     "summary": "Atualizar dados de um cliente",
                     "parameters": [
                         {
@@ -143,6 +157,7 @@ def configure_swagger(app):
                     }
                 },
                 "delete": {
+                    "tags": ["clients"],
                     "summary": "Remover um cliente",
                     "parameters": [
                         {
@@ -164,6 +179,7 @@ def configure_swagger(app):
             },
             "/clients/{id}/attributes": {
                 "post": {
+                    "tags": ["attributes"],
                     "summary": "Adicionar atributo ao cliente",
                     "parameters": [
                         {
@@ -189,25 +205,6 @@ def configure_swagger(app):
                     "responses": {
                         "201": {
                             "description": "Atributo adicionado com sucesso"
-                        },
-                        "404": {
-                            "description": "Cliente não encontrado"
-                        }
-                    }
-                },
-                "get": {
-                    "summary": "Listar atributos do cliente",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "in": "path",
-                            "required": True,
-                            "type": "integer"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Lista de atributos"
                         },
                         "404": {
                             "description": "Cliente não encontrado"
