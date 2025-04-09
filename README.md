@@ -50,7 +50,6 @@ backend/
 1. Clone este repositório:
 ```bash
 git clone <URL-do-repositório>
-cd backend
 ```
 
 2. Crie e ative um ambiente virtual (opcional, mas recomendado):
